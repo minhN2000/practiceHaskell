@@ -46,6 +46,7 @@ mergesort _ [x] = [x]
 mergesort ord x = merge ord (mergesort ord l) (mergesort ord r)
   where (l,r) = halve ord x
 
+
 -- support function: divide list into two lists
 halve ::(Ord a) => (a-> a -> Bool) -> [a] -> ([a],[a])
 halve ord xs = (take lhx xs, drop lhx xs)
@@ -55,6 +56,5 @@ halve ord xs = (take lhx xs, drop lhx xs)
 merge :: (Ord a) => (a -> a -> Bool) -> [a] -> [a] -> [a]
 merge _ x [] = x
 merge _ [] y = y
-merge ord (x:xs) (y:ys) | x < y = x:merge ord xs (y:ys)
-                        | otherwise = y:merge ord ys (x:xs)
-
+merge ord (x:xs) (y:ys) | ord x y = x:(merge ord xs (y:ys))
+                        | otherwise = (y:merge ord (x:xs) ys)
